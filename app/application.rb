@@ -4,15 +4,14 @@ class Application
     res = Rack::Response.new
     req = Rack::Request.new(env)
 
-  #   if req.path == '/books' && req.get?
-  #     books = Book.all
-  #     return [
-  #       200, 
-  #       { 'Content-Type' => 'application/json' }, 
-  #       [ books.to_json ]
-  #     ]
+    if req.path == '/quotes' && req.get?
+      return [
+        200, 
+        { 'Content-Type' => 'application/json' }, 
+        [ Quote.all.to_json ]
+      ]
 
-  #   elsif req.path.match(/books/) && req.post?
+  #   elsif req.path.match(/quotes/) && req.post?
   #     body = JSON.parse(req.body.read)
   #     book = Book.create(body)
   #     return [
@@ -33,11 +32,11 @@ class Application
   #     id = req.path.split('/')[2]
   #     author = Author.find_by(id: id)
   #     if author
-  #       books = author.books
+  #       quotes = author.quotes
   #       author_res = {
   #         name: author.name,
   #         bio: author.bio,
-  #         books: books
+  #         quotes: quotes
   #       }
   #       return [
   #         200, 
@@ -60,4 +59,5 @@ class Application
   #   res.finish
   end
 
+end
 end
