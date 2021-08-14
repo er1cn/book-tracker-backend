@@ -12,6 +12,7 @@ class Application
       [quotes.to_json]]
     end
 
+    #Character Index Route
     if req.path == '/characters' && req.get?
       characters = Character.all
       return [200, 
@@ -19,10 +20,11 @@ class Application
       [characters.to_json]]
     end
 
+
     if req.path.match('/characters') && req.get?
       id= req.path.split('/')[2]
       character = Character.find_by(id: id)
-      if character
+     if character
         quotes = character.quotes
         character_res = { 
           name: character.name,
@@ -40,6 +42,24 @@ class Application
           [ { error: 'character not found'}.to_json]
         ]
       end
+    end
+
+    #Quote Create 
+    if req.path.match(/quotes/) && req.post?
+      body = JSON.parse(req.body.read)
+      quote = Quote.create(body)
+      return [200, 
+      { 'Content-Type' => 'application/json' }, 
+      [quote.to_json]]
+    end
+
+    #Character Create Route
+    if req.path.match(/characters/) && req.post?
+      body = JSON.parse(req.body.read)
+      character = Character.create(body)
+      return [200, 
+      { 'Content-Type' => 'application/json' }, 
+      [character.to_json]]
     end
   
   
