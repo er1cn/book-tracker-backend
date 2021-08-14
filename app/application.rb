@@ -20,11 +20,11 @@ class Application
       [characters.to_json]]
     end
 
-
+    #Show Characters Route
     if req.path.match('/characters') && req.get?
       id= req.path.split('/')[2]
+      begin
       character = Character.find_by(id: id)
-     if character
         quotes = character.quotes
         character_res = { 
           name: character.name,
@@ -35,16 +35,40 @@ class Application
           { 'Content-Type' => 'application/json' },
           [ character_res.to_json ]
         ]
-      else
+      rescue
        return [
-          204,
+          404,
           { 'Content-Type' => 'application/json' },
           [ { error: 'character not found'}.to_json]
         ]
       end
     end
 
-    #Quote Create 
+    #Show Quotes Route
+    if req.path.match('/quotes') && req.get?
+      id= req.path.split('/')[2]
+      begin
+      quote = Quote.find(id)
+        quote_res = { 
+          quote: quote.text
+        }
+        return [
+          200,
+          { 'Content-Type' => 'application/json' },
+          [ quote_res.to_json ]
+        ]
+      rescue
+       return [
+          404,
+          { 'Content-Type' => 'application/json' },
+          [ { error: 'quote not found'}.to_json]
+        ]
+      end
+    end
+
+
+
+    #Quote Create Route
     if req.path.match(/quotes/) && req.post?
       body = JSON.parse(req.body.read)
       quote = Quote.create(body)
@@ -61,6 +85,8 @@ class Application
       { 'Content-Type' => 'application/json' }, 
       [character.to_json]]
     end
+
+
   
   
 
