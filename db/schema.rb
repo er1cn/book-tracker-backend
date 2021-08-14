@@ -10,15 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_12_013655) do
+ActiveRecord::Schema.define(version: 2021_08_14_005338) do
 
   create_table "characters", force: :cascade do |t|
     t.string "name"
-    t.string "location"
   end
 
   create_table "quotes", force: :cascade do |t|
     t.string "text"
+    t.integer "rating"
+    t.integer "character_id"
+    t.index ["character_id"], name: "index_quotes_on_character_id"
   end
 
 end
