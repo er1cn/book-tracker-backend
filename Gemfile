@@ -9,5 +9,7 @@ gem 'shotgun'
 gem "require_all"
 gem "activerecord", "~> 5.2"
 gem "sinatra-activerecord"
-gem "sqlite3"
 gem "faker"
+gem 'rake'
+gem "pg", "~> 1.2"
+gem 'sqlite3'

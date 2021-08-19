@@ -1,3 +1,3 @@
 class Quote < ActiveRecord::Base
-  belongs_to :characters
+  belongs_to :character
 end
